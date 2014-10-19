@@ -20,10 +20,10 @@ _addon_path = _addon.getAddonInfo('path').decode(sys.getfilesystemencoding())
 
 def get_watchlist_entries(feed=_WATCHLIST_FEED_URL):
     d = feedparser.parse(feed)
-    return [{'title': entry.title, 'icefilms_link': get_links(entry.title)} for entry in d.entries]
+    return [{'title': entry.title, 'icefilms_link': get_movie_link(entry.title)} for entry in d.entries]
 
 
-def get_links(title):
+def get_movie_link(title):
     # Get title first letter
     if title[0].isalpha():
         url = _ICEFILMS_URL + "movies/a-z/" + title[0].upper()
@@ -40,26 +40,34 @@ def get_links(title):
     # All links to movies have "ip.php" in their href
     # This returns a list of (if there's a match) NavigableStrings (containing the movie title)
     # Each NavigableString's parent is a Tag, whose 'href' attribute is the URL to pass to icefilms plugin.
-    return [s.parent['href'] for s in soup.findAll("a", href=re.compile("ip.php"), text=title)]
+    link = soup.find("a", href=re.compile("ip.php"), text=title)
+    if link:
+        return link.parent["href"]
+    else:
+        return None
 
 
 entries = get_watchlist_entries()
 for entry in entries:
     url = urllib.quote_plus(_ICEFILMS_URL)
     listitem = xbmcgui.ListItem(label=entry['title'])
+    link = entry['icefilms_link']
     listitem.setInfo(
         type="video",
         infoLabels={
             'Title': entry['title'],
-            'playcount': str(len(entry['icefilms_link']))}
+            'playcount': "1" if link else "0"}
     )
 
     # URL required by icefilms plugin is of the form
     # http://www.icefilms.info/ip.php?v=193445&
 
+    movie_sources_url = "plugin://plugin.video.icefilms/"
+    movie_sources_url += "?mode=100&url=%s" % _ICEFILMS_URL + entry['icefilms_link'] if link else ""    # TODO: go to icefilms search
+
     xbmcplugin.addDirectoryItem(
         _addon_id,
-        url="plugin://plugin.video.icefilms/?mode=100&url=%s" % entry['icefilms_link'],
+        url=movie_sources_url,
         listitem=listitem,
         totalItems=len(entries),
         isFolder=True
