@@ -63,7 +63,10 @@ for entry in entries:
     # http://www.icefilms.info/ip.php?v=193445&
 
     movie_sources_url = "plugin://plugin.video.icefilms/"
-    movie_sources_url += "?mode=100&url=%s" % _ICEFILMS_URL + entry['icefilms_link'] if link else ""    # TODO: go to icefilms search
+    if entry['icefilms_link']:
+        movie_sources_url += "?mode=100&url=%s" % _ICEFILMS_URL + entry['icefilms_link']
+    else:
+        movie_sources_url += "?mode=555&url=%s&search=%s&nextPage=0" % (url, entry['title'])
 
     xbmcplugin.addDirectoryItem(
         _addon_id,
