@@ -12,4 +12,11 @@ This plugin has only been tested on Windows 7, XBMC Gotham 13.2 and plugin.video
 
 Enjoy!
 
+TODO
+====
+
+* Make this testable (i.e. seperate XBMC specific routines from the rest)
+* Better crawling (i.e. "The Hunger Games" is the same as "Hunger Games, The")
+* ...
+
 

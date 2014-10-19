@@ -5,8 +5,7 @@ import feedparser
 from BeautifulSoup import BeautifulSoup
 import requests
 
-# TODO:
-# When looking for available links, remove "The" (i.e. 'The Hunger Games' -> 'Hunger Games')
+# TODO: When looking for available links, remove "The" (i.e. 'The Hunger Games' -> 'Hunger Games')
 
 _WATCHLIST_FEED_URL = "http://rss.imdb.com/user/ur0531641/watchlist"
 _ICEFILMS_URL = "http://www.icefilms.info/"
