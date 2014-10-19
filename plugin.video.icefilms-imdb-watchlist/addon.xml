@@ -4,6 +4,7 @@
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="plugin.video.icefilms" />
     <import addon="script.module.feedparser" />
+    <import addon="script.module.bs4" />
   </requires>
      <extension point="xbmc.python.pluginsource"
                library="default.py">

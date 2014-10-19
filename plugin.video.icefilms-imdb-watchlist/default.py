@@ -1,6 +1,7 @@
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import urllib, sys
 import feedparser
+from bs4 import BeautifulSoup
 
 _WATCHLIST_FEED_URL = "http://rss.imdb.com/user/ur0531641/watchlist"
 
