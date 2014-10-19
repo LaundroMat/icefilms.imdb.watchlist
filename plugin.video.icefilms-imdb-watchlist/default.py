@@ -5,6 +5,9 @@ import feedparser
 from BeautifulSoup import BeautifulSoup
 import requests
 
+# TODO:
+# When looking for available links, remove "The" (i.e. 'The Hunger Games' -> 'Hunger Games')
+
 _WATCHLIST_FEED_URL = "http://rss.imdb.com/user/ur0531641/watchlist"
 _ICEFILMS_URL = "http://www.icefilms.info/"
 
@@ -17,10 +20,10 @@ _addon_path = _addon.getAddonInfo('path').decode(sys.getfilesystemencoding())
 
 def get_watchlist_entries(feed=_WATCHLIST_FEED_URL):
     d = feedparser.parse(feed)
-    return [{'title': entry.title, 'available_links': len(check_for_links(entry.title))} for entry in d.entries]
+    return [{'title': entry.title, 'icefilms_link': get_links(entry.title)} for entry in d.entries]
 
 
-def check_for_links(title):
+def get_links(title):
     # Get title first letter
     if title[0].isalpha():
         url = _ICEFILMS_URL + "movies/a-z/" + title[0].upper()
@@ -35,18 +38,20 @@ def check_for_links(title):
 
     soup = BeautifulSoup(html.content)
     # All links to movies have "ip.php" in their href
-    return soup.findAll("a", href=re.compile("ip.php"), text=title)
+    # This returns a list of (if there's a match) NavigableStrings (containing the movie title)
+    # Each NavigableString's parent is a Tag, whose 'href' attribute is the URL to pass to icefilms plugin.
+    return [s.parent['href'] for s in soup.findAll("a", href=re.compile("ip.php"), text=title)]
 
 
 entries = get_watchlist_entries()
 for entry in entries:
     url = urllib.quote_plus(_ICEFILMS_URL)
-    listitem = xbmcgui.ListItem(label="%s (%i)" % (entry['title'], entry['available_links']))
+    listitem = xbmcgui.ListItem(label=entry['title'])
     listitem.setInfo(
         type="video",
         infoLabels={
             'Title': entry['title'],
-            'playcount': str(entry['available_links'])}
+            'playcount': str(len(entry['icefilms_link']))}
     )
 
     # URL required by icefilms plugin is of the form
@@ -54,7 +59,7 @@ for entry in entries:
 
     xbmcplugin.addDirectoryItem(
         _addon_id,
-        url="plugin://plugin.video.icefilms/?mode=555&url=%s&search=%s&nextPage=0" % (url, entry),
+        url="plugin://plugin.video.icefilms/?mode=100&url=%s" % entry['icefilms_link'],
         listitem=listitem,
         totalItems=len(entries),
         isFolder=True
