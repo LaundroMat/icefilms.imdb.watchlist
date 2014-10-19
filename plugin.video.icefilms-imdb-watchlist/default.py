@@ -47,7 +47,23 @@ def get_movie_link(title):
         return None
 
 
-entries = get_watchlist_entries()
+feed = _addon.getSetting('watchlist_feed_url')
+xbmc.log("Fetching feed.")
+xbmc.log("Feed: %s" % feed)
+xbmc.log("Type: %s" % type(feed))
+
+if feed is None or feed == '':
+    dialog = xbmcgui.Dialog()
+
+    dialog.ok(
+        heading="No IMDB watchlist feed set!",
+        line1="Please update plugin settings with your public IMDB watchlist feed URL.",
+        line2="Press OK to exit."
+    )
+    sys.exit()
+
+entries = get_watchlist_entries(feed)
+
 for entry in entries:
     url = urllib.quote_plus(_ICEFILMS_URL)
     listitem = xbmcgui.ListItem(label=entry['title'])
