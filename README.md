@@ -6,7 +6,7 @@ Search icefilms to stream movies from your IMDB watchlist to XBMC.
 Installation
 ============
 
-Download this repository as a .zip file. Delete all files except the `plugin.video.icefilms-imdb-watchlist` directory from the root directory. Then either install via XBMC [in the usual way](http://kodi.wiki/view/HOW-TO:Install_an_Add-on_from_a_zip_file), or drag the `plugin.video.icefilms-imdb-watchlist` folder to your XBMC addons directory (which is one folder up of your [userdata folder](http://kodi.wiki/view/Userdata)).
+[Download the zip file of the latest release](https://github.com/LaundroMat/icefilms.imdb.watchlist/releases/download/0.9/plugin.video.icefilms-imdb-watchlist.zip) and install it via XBMC [in the usual way](http://kodi.wiki/view/HOW-TO:Install_an_Add-on_from_a_zip_file).
 
 You need to have [plugin.video.icefilms](http://superrepo.org/plugin.video.icefilms/) installed before you can use this plugin.
 
