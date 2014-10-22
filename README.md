@@ -20,6 +20,8 @@ This plugin has only been tested on Windows 7, XBMC Gotham 13.2 and plugin.video
 
 Enjoy!
 
+PS - The plugin "misuses" the watched status of movies. If a movie in your watchlist is marked as watched, it in fact means that is available for streaming on Icefilms. No more frustration with "no sources found"!
+
 TODO
 ====
 
