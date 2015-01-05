@@ -24,8 +24,10 @@ def get_watchlist_entries(feed=_WATCHLIST_FEED_URL):
 
 def get_movie_link(title):
     # Get title first letter
-    if title[0].isalpha():
-        url = _ICEFILMS_URL + "movies/a-z/" + title[0].upper()
+    if title.lower().startswith('the '): title2 = title.lower().replace('the ','')
+    else: title2 = title
+    if title2[0].isalpha():
+        url = _ICEFILMS_URL + "movies/a-z/" + title2[0].upper()
     else:
         url = _ICEFILMS_URL + "movies/a-z/1"
 
