@@ -8,7 +8,7 @@ import requests
 # TODO: When looking for available links, remove "The" (i.e. 'The Hunger Games' -> 'Hunger Games')
 
 _WATCHLIST_FEED_URL = "http://rss.imdb.com/user/ur0531641/watchlist"
-_ICEFILMS_URL = "http://www.icefilms.info/"
+_ICEFILMS_URL = "http://ipv6.icefilms.info/"
 
 _ADDON_NAME = 'plugin.video.imdb-watchlist'
 _addon = xbmcaddon.Addon(id=_ADDON_NAME)
