@@ -27,6 +27,6 @@ TODO
 
 * Make this testable (i.e. seperate XBMC specific routines from the rest)
 * <del>Better crawling (i.e. "The Hunger Games" is the same as "Hunger Games, The")</del> Done; thanks @Mafarricos!
-* ...
+* Make icefilms url a setting instead of hardcoding it.
 
 
